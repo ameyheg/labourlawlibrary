@@ -22,6 +22,15 @@ function initDb(customPath = null) {
   const schemaSql = fs.readFileSync(schemaPath, 'utf8');
   db.exec(schemaSql);
 
+  // Auto-seed if newly created database outside of test isolation
+  if (dbPath !== ':memory:') {
+    const docCount = db.prepare('SELECT COUNT(*) as c FROM legal_documents').get().c;
+    if (docCount === 0) {
+      const { runSeed } = require('./seed');
+      runSeed(db);
+    }
+  }
+
   dbInstance = db;
   return db;
 }
