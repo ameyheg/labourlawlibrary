@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India Labour Law Library | Searchable Repository of Central & State Labour Legislation</title>
+  <meta name="description" content="Official searchable repository of Indian labour legislation, Central Labour Codes, State Acts, Rules, notifications, gazettes, and verification status tracking.">
+  <meta name="keywords" content="India labour laws, Code on Wages, Industrial Relations Code, Social Security Code, OSH Code, Minimum Wages Act, Factories Act, EPF Act">
+  <meta name="author" content="India Labour Law Library">
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- Global Announcement / Scope Disclaimer Banner -->
+  <div class="announcement-banner" id="announcementBanner" role="region" aria-label="Catalog Scope">
+    <div class="banner-container">
+      <span class="banner-pill">Official Scope Notice</span>
+      <span class="banner-text">
+        Verified central labour codes and state enactments indexed against official Gazettes (egazette.gov.in & indiacode.nic.in). Unverified items are strictly flagged.
+      </span>
+      <button class="banner-close" id="dismissBannerBtn" aria-label="Dismiss banner">&times;</button>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="app-header" id="appHeader">
+    <div class="header-container">
+      <div class="brand-group" id="brandHomeLink" role="button" tabindex="0">
+        <div class="brand-emblem">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">India Labour Law Library</span>
+          <span class="brand-subtitle">Statutory Intelligence & Gazette Registry</span>
+        </div>
+      </div>
+
+      <nav class="nav-links" id="mainNav">
+        <button class="nav-link active" id="navHomeBtn">Library</button>
+        <button class="nav-link" id="navStatsBtn">Catalog & Verification</button>
+        <button class="nav-link" id="navSubscriptionBtn">Subscription Plans</button>
+        <button class="nav-link admin-nav-link" id="navAdminBtn" style="display: none;">Admin Registry</button>
+      </nav>
+
+      <div class="auth-group" id="headerAuthGroup">
+        <!-- Injected dynamically by JS -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main id="mainContent" class="main-content" role="main">
+    <!-- View 1: Library Search & Catalog (Home) -->
+    <div id="homeView" class="view-panel active">
+      <!-- Hero Section -->
+      <section class="hero-section" id="heroSection">
+        <div class="hero-container">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>Relational Legal Intelligence • Updated for 2026</span>
+          </div>
+          <h1 class="hero-heading">
+            Authoritative Repository of <br>
+            <span class="text-gradient">Indian Labour Legislation</span>
+          </h1>
+          <p class="hero-subheading">
+            Search Central Labour Codes, legacy statutes, state amendments, gazette notifications, and verified subordinate rules with full statutory cross-referencing.
+          </p>
+
+          <!-- Prominent Search Bar -->
+          <div class="search-box-wrapper" id="searchBoxWrapper">
+            <div class="search-box">
+              <div class="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+              <input 
+                type="text" 
+                id="mainSearchInput" 
+                class="search-input" 
+                placeholder="Search by Act title, section number, citation (e.g. 'Code on Wages', 'Act No. 29 of 2019', 'gratuity', 'working hours')..."
+                autocomplete="off"
+              >
+              <button id="searchClearBtn" class="search-clear-btn" style="display: none;" title="Clear search">&times;</button>
+              <button id="executeSearchBtn" class="search-submit-btn">Search Laws</button>
+            </div>
+
+            <!-- Quick Filter Presets -->
+            <div class="quick-presets" id="quickPresets">
+              <span class="preset-label">Quick Search:</span>
+              <button class="preset-chip" data-query="Code on Wages">Code on Wages</button>
+              <button class="preset-chip" data-query="Social Security">Social Security & PF</button>
+              <button class="preset-chip" data-query="Industrial Relations">Industrial Relations</button>
+              <button class="preset-chip" data-query="Shops and Establishments">State Shops Acts</button>
+              <button class="preset-chip" data-query="Maternity Benefit">Maternity Benefit</button>
+              <button class="preset-chip preset-draft" data-status="draft">Draft Rules</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search & Filter Controls Ribbon -->
+      <section class="filters-ribbon" id="filtersRibbon">
+        <div class="filters-container">
+          <div class="filter-group">
+            <label for="filterJurisdiction">Jurisdiction</label>
+            <select id="filterJurisdiction" class="filter-select">
+              <option value="">All Jurisdictions</option>
+              <option value="central">Central (Union)</option>
+              <option value="state">State Specific</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterState">State / Region</label>
+            <select id="filterState" class="filter-select">
+              <option value="">All States</option>
+              <option value="Central (All India)">Central (All India)</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Delhi">Delhi (NCT)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterSubject">Legal Subject</label>
+            <select id="filterSubject" class="filter-select">
+              <option value="">All Subject Categories</option>
+              <option value="Wages & Remuneration">Wages & Remuneration</option>
+              <option value="Industrial Relations & Disputes">Industrial Relations & Disputes</option>
+              <option value="Social Security & Benefits">Social Security & Benefits</option>
+              <option value="Occupational Safety & Health">Occupational Safety & Health</option>
+              <option value="Shops & Commercial Establishments">Shops & Commercial Establishments</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterStatus">Legal Status</label>
+            <select id="filterStatus" class="filter-select">
+              <option value="">All Legal Statuses</option>
+              <option value="verified">Verified Active Law</option>
+              <option value="draft">Draft Formulation</option>
+              <option value="pending_verification">Pending Verification</option>
+              <option value="superseded">Superseded Enactment</option>
+              <option value="archived">Archived Historical</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterType">Document Type</label>
+            <select id="filterType" class="filter-select">
+              <option value="">All Types</option>
+              <option value="code">Labour Code</option>
+              <option value="act">Primary Act</option>
+              <option value="rules">Subordinate Rules</option>
+              <option value="notification">Notification</option>
+              <option value="amendment">Amendment</option>
+            </select>
+          </div>
+
+          <div class="filter-actions">
+            <button id="resetFiltersBtn" class="btn-secondary" title="Reset all search filters">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Active Filter Chips Bar & Results Count -->
+      <section class="results-meta-bar" id="resultsMetaBar">
+        <div class="results-meta-container">
+          <div class="results-summary">
+            <span id="resultsCount" class="results-count">Loading statutes...</span>
+            <span id="resultsFiltersSummary" class="results-filter-summary"></span>
+          </div>
+          <div class="view-toggles">
+            <span class="verification-badge-legend" title="Legal verification criteria">
+              <span class="legend-dot dot-verified"></span> Verified Law
+              <span class="legend-dot dot-draft"></span> Draft / Unverified
+              <span class="legend-dot dot-superseded"></span> Superseded
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Document Catalog Grid -->
+      <section class="documents-section" id="documentsSection">
+        <div class="documents-grid" id="documentsGrid">
+          <!-- Populated dynamically via JS -->
+        </div>
+        <div id="noResultsState" class="empty-state" style="display: none;">
+          <div class="empty-icon">⚖️</div>
+          <h3>No matching enactments found</h3>
+          <p>Try broadening your search keywords or resetting specific jurisdiction and state filters.</p>
+          <button id="resetSearchFromEmptyBtn" class="btn-primary">Clear Filters</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- View 2: Dedicated Legal Document Reader View -->
+    <div id="documentReaderView" class="view-panel" style="display: none;">
+      <div class="reader-container" id="readerContainer">
+        <!-- Back Navigation & Breadcrumbs -->
+        <div class="reader-nav-header">
+          <button id="backToLibraryBtn" class="btn-back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Library Search
+          </button>
+          <div class="reader-breadcrumbs" id="readerBreadcrumbs">
+            <span>India Labour Law Library</span> &rsaquo; <span id="breadSubject">Subject</span> &rsaquo; <span id="breadDocTitle" class="current">Title</span>
+          </div>
+        </div>
+
+        <div id="documentReaderContent">
+          <!-- Populated dynamically by documentView.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- View 3: Catalog & Verification Coverage View -->
+    <div id="statsView" class="view-panel" style="display: none;">
+      <div class="stats-container" id="statsContainer">
+        <!-- Populated dynamically by stats view -->
+      </div>
+    </div>
+
+    <!-- View 4: Subscription Tiers & Plans View -->
+    <div id="subscriptionView" class="view-panel" style="display: none;">
+      <div class="pricing-container" id="pricingContainer">
+        <div class="pricing-header">
+          <span class="hero-badge">Transparent Tier Architecture</span>
+          <h2>Professional Legal & Compliance Subscriptions</h2>
+          <p>Designed for corporate legal counsels, HR directors, compliance auditors, and legal researchers.</p>
+        </div>
+
+        <div class="pricing-grid" id="pricingCardsGrid">
+          <!-- Free Tier -->
+          <div class="pricing-card" id="cardFreeTier">
+            <div class="pricing-badge">Researcher</div>
+            <h3 class="tier-name">Free Access</h3>
+            <div class="tier-price">₹0 <span>/ forever</span></div>
+            <p class="tier-desc">Essential access to Indian central labour codes and primary statutes.</p>
+            <ul class="tier-features">
+              <li>✓ Search Central & State Labour Acts</li>
+              <li>✓ Dedicated document reading pages</li>
+              <li>✓ Gazette citation & official source links</li>
+              <li>✓ Verification status & missing fields flags</li>
+              <li>✗ Plain text statutory compilation downloads</li>
+              <li>✗ State subordinate rules tracker</li>
+            </ul>
+            <button class="tier-action-btn btn-secondary" id="selectFreeTierBtn">Current Tier</button>
+          </div>
+
+          <!-- Pro Tier -->
+          <div class="pricing-card featured" id="cardProTier">
+            <div class="featured-ribbon">Most Popular</div>
+            <div class="pricing-badge">Corporate HR & Legal</div>
+            <h3 class="tier-name">Pro Compliance</h3>
+            <div class="tier-price">₹1,999 <span>/ month</span></div>
+            <p class="tier-desc">Full statutory downloads, state rule tracking, and supersession mapping.</p>
+            <ul class="tier-features">
+              <li>✓ <strong>Everything in Free Access</strong></li>
+              <li>✓ <strong>Instant plain-text statutory compilation downloads</strong></li>
+              <li>✓ <strong>State Shops & Establishments rule comparison</strong></li>
+              <li>✓ <strong>Superseded Act to Labour Code mapping</strong></li>
+              <li>✓ <strong>Amendment history timeline & gazette logs</strong></li>
+              <li>✓ Verification audit trail access</li>
+            </ul>
+            <button class="tier-action-btn btn-primary" id="selectProTierBtn">Upgrade to Pro</button>
+          </div>
+
+          <!-- Enterprise Tier -->
+          <div class="pricing-card" id="cardEnterpriseTier">
+            <div class="pricing-badge">Enterprise</div>
+            <h3 class="tier-name">Institutional</h3>
+            <div class="tier-price">₹6,999 <span>/ month</span></div>
+            <p class="tier-desc">Multi-seat enterprise access with automated regulatory change monitoring.</p>
+            <ul class="tier-features">
+              <li>✓ <strong>Everything in Pro Compliance</strong></li>
+              <li>✓ Unlimited user seat provisioning</li>
+              <li>✓ Direct database backup download access</li>
+              <li>✓ Automated regulatory gazette webhook alerts</li>
+              <li>✓ Dedicated legal editorial research support</li>
+              <li>✓ Priority verification requests</li>
+            </ul>
+            <button class="tier-action-btn btn-primary" id="selectEnterpriseTierBtn">Switch to Enterprise</button>
+          </div>
+        </div>
+
+        <div class="pricing-guarantee">
+          <p>🔒 All subscriptions support instant self-service plan switching for architectural testing. Billing ready with standard webhook hooks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- View 5: Administrator & Editorial Registry Dashboard -->
+    <div id="adminView" class="view-panel" style="display: none;">
+      <div class="admin-container" id="adminContainer">
+        <!-- Populated dynamically by adminView.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Auth Modal (Login / Register / Switch Test Roles) -->
+  <div class="modal-backdrop" id="authModal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="authModalTitle">Sign In to Labour Law Library</h3>
+        <button class="modal-close-btn" id="closeAuthModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Role Demo Quick Switch Bar -->
+        <div class="demo-login-box">
+          <span class="demo-title">⚡ Instant Test Profiles (Pair Programming Demo):</span>
+          <div class="demo-buttons">
+            <button type="button" class="btn-demo-chip" id="demoAdminBtn" title="admin@labourlaws.in">Chief Registrar (Admin)</button>
+            <button type="button" class="btn-demo-chip" id="demoEditorBtn" title="editor@labourlaws.in">Senior Editor</button>
+            <button type="button" class="btn-demo-chip" id="demoProBtn" title="pro@subscriber.in">Pro HR Subscriber</button>
+            <button type="button" class="btn-demo-chip" id="demoFreeBtn" title="free@subscriber.in">Free Researcher</button>
+          </div>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="authTabLogin">Sign In</button>
+          <button class="auth-tab" id="authTabRegister">Create Account</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form active">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" required placeholder="e.g. admin@labourlaws.in">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" required placeholder="Enter your password">
+          </div>
+          <div id="loginError" class="form-error" style="display: none;"></div>
+          <button type="submit" id="submitLoginBtn" class="btn-primary btn-block">Sign In</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" class="auth-form" style="display: none;">
+          <div class="form-group">
+            <label for="regFullName">Full Legal / Organization Name</label>
+            <input type="text" id="regFullName" required placeholder="e.g. Ramesh Sharma">
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Work Email Address</label>
+            <input type="email" id="regEmail" required placeholder="e.g. ramesh@company.in">
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Password (minimum 8 characters)</label>
+            <input type="password" id="regPassword" required minlength="8" placeholder="Create a secure password">
+          </div>
+          <div class="form-group">
+            <label for="regTier">Initial Subscription Tier</label>
+            <select id="regTier">
+              <option value="free">Free Access (Researcher)</option>
+              <option value="pro">Pro Compliance (Corporate HR)</option>
+              <option value="enterprise">Institutional Enterprise</option>
+            </select>
+          </div>
+          <div id="registerError" class="form-error" style="display: none;"></div>
+          <button type="submit" id="submitRegisterBtn" class="btn-primary btn-block">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Document Editor Modal (For Admin & Editor) -->
+  <div class="modal-backdrop" id="docEditorModal" style="display: none;">
+    <div class="modal-dialog modal-large">
+      <div class="modal-header">
+        <h3 id="docEditorModalTitle">Register New Legal Enactment</h3>
+        <button class="modal-close-btn" id="closeDocEditorModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="documentForm" class="doc-editor-form">
+          <input type="hidden" id="editDocId">
+          
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label for="formTitle">Document Full Title *</label>
+              <input type="text" id="formTitle" required placeholder="e.g. The Code on Wages, 2019">
+            </div>
+            <div class="form-group flex-1">
+              <label for="formShortTitle">Short Title *</label>
+              <input type="text" id="formShortTitle" required placeholder="e.g. Code on Wages 2019">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="formDocNumber">Document / Act Number</label>
+              <input type="text" id="formDocNumber" placeholder="e.g. Act No. 29 of 2019">
+            </div>
+            <div class="form-group">
+              <label for="formDocType">Document Type *</label>
+              <select id="formDocType" required>
+                <option value="code">Labour Code</option>
+                <option value="act">Primary Act</option>
+                <option value="rules">Subordinate Rules</option>
+                <option value="notification">Gazette Notification</option>
+                <option value="amendment">Statutory Amendment</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="formJurisdiction">Jurisdiction *</label>
+              <select id="formJurisdiction" required>
+                <option value="central">Central (Union)</option>
+                <option value="state">State</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="formState">State / Region</label>
+              <input type="text" id="formState" value="Central (All India)" placeholder="Central (All India) or State name">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label for="formIssuingAuthority">Issuing Authority *</label>
+              <input type="text" id="formIssuingAuthority" required placeholder="e.g. Ministry of Labour and Employment, Government of India">
+            </div>
+            <div class="form-group flex-2">
+              <label for="formSubject">Subject Category *</label>
+              <select id="formSubject" required>
+                <option value="Wages & Remuneration">Wages & Remuneration</option>
+                <option value="Industrial Relations & Disputes">Industrial Relations & Disputes</option>
+                <option value="Social Security & Benefits">Social Security & Benefits</option>
+                <option value="Occupational Safety & Health">Occupational Safety & Health</option>
+                <option value="Shops & Commercial Establishments">Shops & Commercial Establishments</option>
+                <option value="Contract & Migrant Labour">Contract & Migrant Labour</option>
+                <option value="Apprenticeship & Employment Exchanges">Apprenticeship & Employment Exchanges</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="formPubDate">Publication Date (YYYY-MM-DD) *</label>
+              <input type="date" id="formPubDate" required>
+            </div>
+            <div class="form-group">
+              <label for="formEffDate">Effective Enforcement Date (if notified)</label>
+              <input type="date" id="formEffDate" placeholder="Leave empty if pending notification">
+            </div>
+            <div class="form-group">
+              <label for="formLegalStatus">Legal Status *</label>
+              <select id="formLegalStatus" required>
+                <option value="draft">Draft Formulation</option>
+                <option value="pending_verification">Pending Verification</option>
+                <option value="verified">Verified Active</option>
+                <option value="superseded">Superseded</option>
+                <option value="archived">Archived Historical</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="formVerificationStatus">Verification Status *</label>
+              <select id="formVerificationStatus" required>
+                <option value="unverified">Unverified</option>
+                <option value="verified">Verified Official</option>
+                <option value="disputed">Disputed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label for="formCitation">Official Citation *</label>
+              <input type="text" id="formCitation" required placeholder="e.g. Gazette of India, Extraordinary, Part II, Section 1, No. 43">
+            </div>
+            <div class="form-group flex-2">
+              <label for="formSourceUrl">Official Source URL * (Gazette / Ministry)</label>
+              <input type="url" id="formSourceUrl" required placeholder="https://labour.gov.in/sites/default/files/act.pdf">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="formSupersededBy">Superseded By (Successor Code / Act)</label>
+            <select id="formSupersededBy">
+              <option value="">None (Active primary law)</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="formSummary">Statutory Executive Summary *</label>
+            <textarea id="formSummary" rows="3" required placeholder="Provide an accurate summary of legislative intent, scope, and key mechanisms..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="formFullText">Statutory Text & Codified Provisions *</label>
+            <textarea id="formFullText" rows="6" required placeholder="Full statutory text or key chapters, definitions and sections..."></textarea>
+          </div>
+
+          <div id="docEditorError" class="form-error" style="display: none;"></div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="cancelDocEditorBtn">Cancel</button>
+            <button type="submit" class="btn-primary" id="saveDocBtn">Save Enactment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer" id="appFooter">
+    <div class="footer-container">
+      <div class="footer-col brand-col">
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <span>India Labour Law Library</span>
+        </div>
+        <p class="footer-desc">
+          A verifiable digital legal repository documenting Indian central and state labour legislation, gazette citations, and legislative transitions under the Ministry of Labour & Employment.
+        </p>
+        <p class="footer-disclaimer">
+          <strong>Legal Disclaimer:</strong> Not a substitute for formal legal counsel. Enactments are cross-referenced with the Official Gazette of India and India Code.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Central Labour Codes</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-doc-link" data-slug="the-code-on-wages-2019">The Code on Wages, 2019</a></li>
+          <li><a href="#" class="footer-doc-link" data-slug="the-industrial-relations-code-2020">Industrial Relations Code, 2020</a></li>
+          <li><a href="#" class="footer-doc-link" data-slug="the-code-on-social-security-2020">Code on Social Security, 2020</a></li>
+          <li><a href="#" class="footer-doc-link" data-slug="the-occupational-safety-health-and-working-conditions-code-2020">OSHWC Code, 2020</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>State Enactments</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-doc-link" data-slug="maharashtra-shops-and-establishments-act-2017">Maharashtra Shops Act, 2017</a></li>
+          <li><a href="#" class="footer-doc-link" data-slug="karnataka-shops-and-commercial-establishments-act-1961">Karnataka Shops Act, 1961</a></li>
+          <li><a href="#" class="footer-doc-link" data-slug="delhi-shops-and-establishments-act-1954">Delhi Shops Act, 1954</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Verification Portals</h4>
+        <ul class="footer-links">
+          <li><a href="https://egazette.gov.in" target="_blank" rel="noopener noreferrer">eGazette of India (Official) ↗</a></li>
+          <li><a href="https://www.indiacode.nic.in" target="_blank" rel="noopener noreferrer">India Code Repository ↗</a></li>
+          <li><a href="https://labour.gov.in" target="_blank" rel="noopener noreferrer">Ministry of Labour & Employment ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-container">
+        <span>&copy; 2026 India Labour Law Library. Designed for legal accuracy and audit transparency.</span>
+        <span>Environment: Node.js 24 • Relational SQLite WAL Engine</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

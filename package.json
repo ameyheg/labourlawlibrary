@@ -1,0 +1,23 @@
+{
+  "name": "labour-laws-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "test": "node --test server/tests/*.test.js",
+    "db:seed": "node server/db/seed.js",
+    "db:backup": "node server/db/backup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
+  }
+}
